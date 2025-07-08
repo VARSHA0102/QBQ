@@ -36,35 +36,21 @@ body {
 /* Removed .smoke and @keyframes smokeMove */
 
 /* Hero text reveal animation (kept) */
-video#bg-video {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      z-index: -1;
-    }
+.smoke-text {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: textReveal 1.6s ease-out forwards;
+  z-index: 2;
+  position: relative;
+}
 
-    .smoke-text {
-      opacity: 0;
-      transform: translateY(30px);
-      animation: textReveal 1.6s ease-out forwards;
-      z-index: 2;
-      position: relative;
-      transition: color 1s ease;
-    }
+@keyframes textReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-    @keyframes textReveal {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .hero-button {
-      transition: all 0.3s ease;
-    }
 
 /* Reveal Animation */
 .smoke-text {
@@ -121,7 +107,6 @@ video#bg-video {
 .nav-link:hover::before {
   transform: scaleX(1);
 }
-
 
 
 /* Contact */
