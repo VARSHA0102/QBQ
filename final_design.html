@@ -6,36 +6,34 @@
     <title>QuantumBay - AI Redefined</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body class="bg-black text-white">
 
     <!-- Navbar -->
-<header class="fixed top-0 left-0 w-full z-50 backdrop-blur bg-black/40 ">
+<header class="fixed top-0 left-0 w-full z-50 backdrop-blur bg-black/40">
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-    <div  id="logo" class="text-2xl font-bold tracking-wide text-white hover:text-cyan-400 transition duration-300">QuantumBay</div>
+    <div class="text-2xl font-bold tracking-wide text-white hover:text-cyan-400 transition duration-300">QuantumBay</div>
     <nav class="hidden md:flex space-x-6 text-sm font-medium">
       <a href="#about" class="nav-link">About</a>
       <a href="#services" class="nav-link">Services</a>
       <a href="#projects" class="nav-link">Projects</a>
-      <a href="#ai-pocs" class="nav-link">AI PoCs</a>
       <a href="#blogs" class="nav-link">Blogs</a>
-      <a href="#careers" class="nav-link">Careers</a>
+      <a href="#event" class="nav-link">Event</a>
     </nav>
   </div>
 </header>
 
-
 <!-- Hero -->
 <section class="h-screen flex items-center justify-center text-center px-6 relative bg-black overflow-hidden">
   
-
   <!-- Animated Gradient Background Overlay -->
   <div class="absolute inset-0 z-0 bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] opacity-80 animate-gradient">
-    <video id="bg-video" autoplay muted loop playsinline>
-    <source src="final_bg_bw.mp4" type="video/mp4">
+    <video id="heroVideo" class="absolute inset-0 w-full h-full object-cover z-0" autoplay muted playsinline onended="handleVideoEnd()">
+    <source src="final_b.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
+
   </div>
 
   <!-- Subtle Floating Particles -->
@@ -45,13 +43,12 @@
 
   <!-- Content -->
   <div class="z-10 relative">
-    <h1 id="heroTitle" class="text-6xl md:text-6xl font-medium mb-4 text-white smoke-text">Intelligence Meets Precision</h1>
-    <p  id="heroSubtitle"class="text-base md:text-lg text-gray-300 max-w-2xl mx-auto mb-6 smoke-text" style="animation-delay: 2.5s;">
+    <h1 class="text-6xl md:text-6xl font-medium mb-4 text-white smoke-text">Intelligence Meets Precision</h1>
+    <p class="text-base md:text-lg text-gray-300 max-w-2xl mx-auto mb-6 smoke-text" style="animation-delay: 2.5s;">
       QuantumBay builds cutting-edge AI solutions tailored for the future.
     </p>
     <div class="flex gap-4 justify-center smoke-text" style="animation-delay: 3s;">
-      <!-- <a id="exploreBtn"  href="#solutions" class="bg-cyan-500 text-black px-6 py-3 rounded hover:bg-cyan-400 transition hero-button">Explore Solutions</a> -->
-      <a  id="demoBtn"  href="javascript:void(0);" onclick="openModal()" class="border border-cyan-500 text-cyan-500 px-6 py-3 rounded hover:bg-cyan-900 transition hero-button">Get Demo</a>
+      <a href="javascript:void(0);" onclick="openModal()" class="border border-cyan-500 text-cyan-500 px-6 py-3 rounded hover:bg-cyan-900 transition hero-button">Get Demo</a>
 </div>
   </div>
 </section>
@@ -230,53 +227,16 @@
 
 
 
-  // Elements
-const video = document.getElementById('bg-video');
-const heroTitle = document.getElementById('heroTitle');
-const heroSubtitle = document.getElementById('heroSubtitle');
-const logo = document.getElementById('logo');
-const navLinks = document.querySelectorAll('.nav-link');
+  function handleVideoEnd() {
+  const heroSection = document.querySelector("section.h-screen");
+  const video = document.getElementById("heroVideo");
 
-const exploreBtn = document.getElementById('exploreBtn');
-const demoBtn = document.getElementById('demoBtn');
+  // Hide the video
+  video.style.display = "none";
 
-let currentColor = 'white';
-
-// Optional: slow video down after 3 seconds
-setTimeout(() => {
-  video.playbackRate = 0.7;
-}, 3000);
-
-// Color logic
-setInterval(() => {
-  const t = video.currentTime;
-  const cycle = 12.9;
-
-  const newColor = (t % cycle < 6) ? 'white' : 'black';
-
-  if (newColor !== currentColor) {
-    // HERO
-    heroTitle.style.color = newColor;
-    heroSubtitle.style.color = (newColor === 'white') ? '#ccc' : '#111';
-
-    // NAVBAR
-    logo.style.color = newColor;
-    navLinks.forEach(link => {
-      link.style.color = (newColor === 'white') ? '#ccc' : '#111';
-    });
-
-
-
-    // HERO BUTTONS
-    if (exploreBtn) exploreBtn.style.color = (newColor === 'white') ? 'black' : 'white';
-    if (demoBtn) {
-      demoBtn.style.color = 'black'; // keeps neon cyan
-      demoBtn.style.borderColor = 'black';
-    }
-
-    currentColor = newColor;
-  }
-}, 100);
+  // Make background solid black
+  heroSection.style.background = "black";
+}
 
 </script>
 
