@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QuantumBay Hero</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background: black;
+      overflow-x: hidden;
+    }
+
+    .hero-section {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .bg-animated {
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(-45deg, #111111, #1e1e1e, #2a2a2a, #111111);
+      background-size: 400% 400%;
+      animation: gradientFlow 15s ease infinite;
+      z-index: 0;
+      opacity: 0.35;
+      filter: blur(80px);
+    }
+
+    @keyframes gradientFlow {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    canvas.particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      color: white;
+      padding: 2rem;
+    }
+
+    .smoke-text {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 1.2s ease-out forwards;
+    }
+
+    .smoke-text:nth-child(1) {
+      animation-delay: 1s;
+    }
+
+    .smoke-text:nth-child(2) {
+      animation-delay: 1.5s;
+    }
+
+    .smoke-text:nth-child(3) {
+      animation-delay: 2s;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-button {
+      transition: all 0.3s ease;
+    }
+
+    .hero-button:hover {
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+<section class="hero-section">
+  <!-- Background Animated Layer -->
+  <div class="bg-animated"></div>
+  <canvas class="particles"></canvas>
+
+  <!-- Content -->
+  <div class="content">
+    <h1 class="text-5xl md:text-7xl font-bold mb-6 smoke-text">
+      Intelligence Meets Precision
+    </h1>
+    <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-8 smoke-text">
+      QuantumBay builds cutting-edge AI solutions tailored for the future.
+    </p>
+    <div class="flex gap-4 justify-center smoke-text">
+      <a href="#solutions" class="bg-cyan-500 text-black px-6 py-3 rounded hover:bg-cyan-400 transition hero-button">
+        Explore Solutions
+      </a>
+      <a href="#contact" class="border border-cyan-500 text-cyan-500 px-6 py-3 rounded hover:bg-cyan-900 transition hero-button">
+        Get Demo
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Particle Animation Script -->
+<script>
+  const canvas = document.querySelector(".particles");
+  const ctx = canvas.getContext("2d");
+  let particles = [];
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  window.addEventListener("resize", resize);
+  resize();
+
+  function createParticle() {
+    return {
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 2 + 1,
+      speedX: (Math.random() - 0.5) * 0.5,
+      speedY: (Math.random() - 0.5) * 0.5,
+      alpha: Math.random() * 0.5 + 0.3
+    };
+  }
+
+  for (let i = 0; i < 80; i++) {
+    particles.push(createParticle());
+  }
+
+  function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let p of particles) {
+      p.x += p.speedX;
+      p.y += p.speedY;
+
+      if (p.x < 0 || p.x > canvas.width || p.y < 0 || p.y > canvas.height) {
+        Object.assign(p, createParticle());
+      }
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
+      ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
+      ctx.fill();
+    }
+
+    requestAnimationFrame(animateParticles);
+  }
+
+  animateParticles();
+</script>
+
+</body>
+</html>
